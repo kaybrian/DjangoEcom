@@ -8,6 +8,11 @@ body{
 .row{
     margin-top: 10px;
 }
+.form-field{
+    width: 250px;
+    display: inline-block;
+    padding: 5px;
+}
 .box-element{
     box-shadow:hsl(0, 0%, 80%) 0 0 16px;
     background-color: #ffffff;
@@ -39,4 +44,30 @@ body{
     height: 25px;
     border-radius: 50%;
     font-size: 14px;
+}
+.row-img{
+    width: 100px;
+}
+.cart-row{
+    display: flex;
+    align-items: flex-stretch;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ececec;
+}
+
+.quantity{
+    display: inline-block;
+    font-weight: 700;
+    padding-right: 10px;
+}
+
+.chg-quantity{
+    width: 12px;
+    cursor: pointer;
+    display: block;
+}
+
+.hidden{
+    display:none !important;
 }
