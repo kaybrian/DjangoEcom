@@ -9,8 +9,14 @@ def store(request):
     return render(request, 'store/store.html',context)
 
 def chart(request):
-    if request.user.
-    context = {}
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer,complete=False )
+        items = order.orderitem_set.all()
+
+    else: 
+        items = []
+    context = {'items':items}
     return render(request, 'store/chart.html',context)
 
 def checkout(request):
