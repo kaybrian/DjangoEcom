@@ -4,5 +4,34 @@
 
 
 {% block otherContent %}
-<h3>Cart page</h3>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box-element">
+            <a class="btn btn-outline-dark" href="{% url 'store:store' %}">&#x2190; Continue Shopping </a>
+            <br>
+            <br>
+           
+            <table class="table">
+                <tr>
+                    <th><h5>Items: <strong>6</strong></h5></th>
+                    <th><h5>Total: <strong>$536</strong></h5></th>
+                    <th>
+                        <a class="btn btn-success float-right" href="{% url 'store:checkout' %}">checkout</a>
+                    </th>
+                </tr>
+            </table>
+            
+        </div>
+
+
+        <br>
+
+
+        <div class="box-element">
+            
+        </div>
+
+
+    </div>
+</div>
 {% endblock otherContent %}
