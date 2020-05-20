@@ -9,13 +9,17 @@ for (var i = 0; i < updateButton.length; i++){
         console.log("productId:",productId, 'action:',action)
 
         console.log('User :', user)
-        if (user == 'AnonymousUser'){
-            console.log('Not logged in')
+        if (user === 'AnonymousUser'){
+            addCookieItem();
         }
         else{
-            updateUserOrder(productId,action)
+            updateUserOrder(productId,action);
         }
     })
+}
+
+function addCookieItem(productId,action){
+    console.log('We are creating Cookies ')
 }
 
 // this is a function that is going to fetch the data using the fetch API
@@ -38,3 +42,5 @@ function updateUserOrder(productId, action){
         location.reload()
     })
 }
+
+
