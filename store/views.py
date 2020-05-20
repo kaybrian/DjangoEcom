@@ -31,9 +31,36 @@ def chart(request):
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
+        try:
+            cart = json.loads(request.COOKIES['cart'])
+        except:
+            cart = {}
+
+        print('Cart: ', cart)
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': False}
         cartItems = order['get_cart_items']
+        for i in cart:
+            cartItems += cart[i]['quantity']
+
+            product = Product.objects.get(id=i)
+            total = (product.price * cart[i]['quantity'])
+
+            order['get_cart_total'] += total
+            order['get_cart_items'] += cart[i]['quantity']
+
+            item = {
+                'product': {
+                    "id": product.id,
+                    "name": product.name,
+                    "price": product.price,
+                    "imageUrl": product.imageUrl
+                },
+                "quantity": cart[i]['quantity'],
+                "get_total": total
+
+            }
+            items.append(item)
 
     context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'store/chart.html', context)
@@ -86,7 +113,7 @@ def processOrder(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(
-        customer=customer, complete=False)
+            customer=customer, complete=False)
         total = float(data['form']['total'])
         order.transaction_id = transaction_id
 
@@ -96,17 +123,16 @@ def processOrder(request):
 
         if order.shipping == True:
             shippingAddress.objects.create(
-                customer = customer,
-                order = order,
-                address = data['shipping']['address'],
-                city = data['shipping']['city'],
-                state = data['shipping']['state'],
-                zipcode = data['shipping']['zipcode'],
-                
+                customer=customer,
+                order=order,
+                address=data['shipping']['address'],
+                city=data['shipping']['city'],
+                state=data['shipping']['state'],
+                zipcode=data['shipping']['zipcode'],
+
 
             )
-              
+
     else:
         print('User is not logged in ')
     return JsonResponse('Payment Complete', safe=False)
-
