@@ -56,3 +56,35 @@ def cartData(request):
         order = cookiedata['order']
         cartItems = cookiedata['cartItems']
     return {'cartItems': cartItems, 'items': items, 'order': order}
+
+
+
+def guestOrder(request,data):
+    print('User is not logged in ')
+    print('COOKIES ', request.COOKIES)
+    name = data['form']['name']
+    email = data['form']['email']
+
+    cookiedata = cookieCart(request)
+    items = cookiedata['items']
+
+    customer, created = Customer.objects.get_or_create(
+            email=email,
+        )
+    customer.name = name
+    customer.save()
+
+    order = Order.objects.create(
+            customer=customer,
+            complete=False,
+        )
+
+    for item in items:
+        product = Product.objects.get(id=item['product']['id'])
+
+        orderitem = OrderItem.objects.create(
+            product=product,
+            order=order,
+            quantity=item['quantity']
+        )
+    return customer,order
