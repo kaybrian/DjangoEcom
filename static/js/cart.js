@@ -19,8 +19,7 @@ for (var i = 0; i < updateButton.length; i++) {
 }
 
 function addCookieItem(productId, action) {
-    console.log('We are creating Cookies ');
-    if (action == "add") {
+     if (action == "add") {
         if (cart[productId] == undefined) {
             cart[productId] = { 'quantity': 1 };
         } else {
@@ -31,14 +30,15 @@ function addCookieItem(productId, action) {
     if (action == "remove") {
         cart[productId]['quantity'] -= 1;
 
-        if(cart[productId]['quantity'] <= 0){
+        if (cart[productId]['quantity'] <= 0) {
             console.log('remove the item')
             delete cart[productId]
         }
     }
-    console.log('Cart :',cart)
-    document.cookie = 'cart='+JSON.stringify(cart)+ ';domain=;path=/';
-    
+    console.log('Cart :', cart)
+    document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/';
+    location.reload();
+
 }
 
 // this is a function that is going to fetch the data using the fetch API
